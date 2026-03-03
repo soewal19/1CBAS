@@ -61,6 +61,48 @@ npm run dev
 - Swagger напрямую с backend: `http://localhost:3000/api-docs`
 - API: `http://localhost:3000/api/...`
 
+### Запуск E2E тестов (Playwright)
+
+Важно: в `playwright.config.js` базовый URL тестов — `http://localhost:5175`.
+
+1. Установить браузеры Playwright (один раз):
+
+```bash
+npx playwright install
+```
+
+2. Запустить backend (терминал 1, из корня):
+
+```bash
+node server/server.js
+```
+
+3. Запустить frontend на порту `5175` (терминал 2):
+
+```bash
+cd client
+npm run dev -- --port 5175
+```
+
+4. Запустить E2E тесты (терминал 3, из корня):
+
+```bash
+npx playwright test
+```
+
+Полезные команды:
+
+```bash
+# Запуск одного файла
+npx playwright test tests/e2e/inventory.spec.js
+
+# Режим с UI браузера
+npx playwright test --headed
+
+# HTML-репорт (если включен)
+npx playwright show-report
+```
+
 ### Основные сценарии
 
 1. Документы:
@@ -147,6 +189,48 @@ npm run dev
 - Swagger directly on backend: `http://localhost:3000/api-docs`
 - API: `http://localhost:3000/api/...`
 
+### Running E2E tests (Playwright)
+
+Important: `playwright.config.js` uses `http://localhost:5175` as `baseURL`.
+
+1. Install Playwright browsers (once):
+
+```bash
+npx playwright install
+```
+
+2. Start backend (terminal 1, project root):
+
+```bash
+node server/server.js
+```
+
+3. Start frontend on port `5175` (terminal 2):
+
+```bash
+cd client
+npm run dev -- --port 5175
+```
+
+4. Run E2E tests (terminal 3, project root):
+
+```bash
+npx playwright test
+```
+
+Useful commands:
+
+```bash
+# Run a single spec
+npx playwright test tests/e2e/inventory.spec.js
+
+# Headed mode
+npx playwright test --headed
+
+# HTML report (if available)
+npx playwright show-report
+```
+
 ### Main flows
 
 1. Documents:
@@ -173,4 +257,3 @@ To get profit rows:
 - Report export creates CSV with both profit and inventory sections
 - Document type filter works in UI and backend
 - Swagger is available on both `5173/api-docs` and `3000/api-docs`
-
