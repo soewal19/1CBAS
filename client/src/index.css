@@ -121,8 +121,6 @@ body {
   background-color: #f2f2f2;
   border-right: 1px solid #c0c0c0;
   width: 256px;
-  display: flex;
-  flex-direction: column;
 }
 
 .sidebar-item-1c {
