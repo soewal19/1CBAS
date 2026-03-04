@@ -116,24 +116,24 @@ export default function Documents() {
     return (
         <div className="flex flex-col h-full space-y-4 animate-fade-in w-full overflow-hidden">
             {/* 1C Toolbar */}
-            <div className="bg-[#f8f8f8] p-2 border border-[#c0c0c0] shadow-sm flex items-center justify-between shrink-0">
-                <div className="flex items-center space-x-2">
-                    <Link to="/documents/new/Order" className="btn-primary-1c h-8 space-x-1">
+            <div className="bg-[#f8f8f8] p-2 border border-[#c0c0c0] shadow-sm flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-between shrink-0">
+                <div className="flex flex-wrap items-center gap-2">
+                    <Link to="/documents/new/Order" className="btn-primary-1c h-11 sm:h-8 space-x-1">
                         <Plus className="h-4 w-4" />
                         <span>Create</span>
                     </Link>
-                    <button onClick={handleRefresh} className="btn-1c h-8 space-x-1">
+                    <button onClick={handleRefresh} className="btn-1c h-11 sm:h-8 space-x-1">
                         <RefreshCcw className={classNames("h-4 w-4", isLoading && "animate-spin")} />
                         <span>Refresh</span>
                     </button>
                     <div className="w-px h-6 bg-[#c0c0c0] mx-2"></div>
-                    <div className="flex items-center space-x-2">
-                    <button className="btn-1c h-8 space-x-1" type="button">
+                    <div className="flex flex-wrap items-center gap-2">
+                    <button className="btn-1c h-11 sm:h-8 space-x-1" type="button">
                         <Filter className="h-4 w-4" />
                         <span>Filter Type</span>
                     </button>
                     <select
-                        className="input-1c h-8 text-xs min-w-40"
+                        className="input-1c h-11 sm:h-8 text-xs min-w-40"
                         value={filterTerm}
                         onChange={(e) => setFilter(e.target.value)}
                     >
@@ -149,35 +149,35 @@ export default function Documents() {
                     )}
                 </div>
 
-                <div className="flex items-center space-x-2">
-                    <div className="relative">
+                <div className="flex flex-wrap items-center gap-2">
+                    <div className="relative w-full sm:w-auto">
                         <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
                         <input
                             ref={searchInputRef}
                             type="text"
                             placeholder="Search document registry..."
-                            className="input-1c h-8 pl-8 w-64 text-xs"
+                            className="input-1c h-11 sm:h-8 pl-8 w-full sm:w-64 text-xs"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
                         />
                     </div>
-                    <div className="flex items-center space-x-1">
+                    <div className="flex flex-wrap items-center gap-1">
                         <input
                             type="date"
-                            className="input-1c h-8 text-xs"
+                            className="input-1c h-11 sm:h-8 text-xs"
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
                         />
                         <span className="text-xs">—</span>
                         <input
                             type="date"
-                            className="input-1c h-8 text-xs"
+                            className="input-1c h-11 sm:h-8 text-xs"
                             value={endDate}
                             onChange={(e) => setEndDate(e.target.value)}
                         />
                     </div>
-                    <button onClick={toggleMenu} className="btn-1c h-8 relative">
+                    <button onClick={toggleMenu} className="btn-1c h-11 sm:h-8 relative">
                         <MoreVertical className="h-4 w-4" />
                         {menuOpen && (
                             <div className="absolute right-0 mt-1 w-40 bg-white border border-[#c0c0c0] shadow-lg z-20">
@@ -240,14 +240,14 @@ export default function Documents() {
                                             {doc.total_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })} <span className="text-[10px] text-slate-400">USD</span>
                                         </td>
                                         <td className="text-center">
-                                            <div className="flex items-center justify-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <div className="flex items-center justify-center space-x-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                                                 <button 
                                                     onClick={(e) => { e.stopPropagation(); navigate(`/documents/edit/${doc.id}`); }}
-                                                    className="p-1 hover:bg-white rounded border border-transparent hover:border-[#c0c0c0]"
+                                                    className="p-2 sm:p-1 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 hover:bg-white rounded border border-transparent hover:border-[#c0c0c0]"
                                                 ><FileEdit className="h-3.5 w-3.5 text-slate-600" /></button>
                                                 <button 
                                                     onClick={(e) => { e.stopPropagation(); handleDeleteDocument(doc.id); }}
-                                                    className="p-1 hover:bg-white rounded border border-transparent hover:border-[#c0c0c0]"
+                                                    className="p-2 sm:p-1 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 hover:bg-white rounded border border-transparent hover:border-[#c0c0c0]"
                                                 ><Trash2 className="h-3.5 w-3.5 text-rose-500" /></button>
                                             </div>
                                         </td>
@@ -269,10 +269,10 @@ export default function Documents() {
                 </div>
 
                 {/* 1C Pagination */}
-                <div className="bg-[#f2f2f2] border-t border-[#c0c0c0] p-2 flex items-center justify-between shrink-0 text-xs text-slate-600 font-medium">
-                    <div className="flex items-center space-x-4">
+                <div className="bg-[#f2f2f2] border-t border-[#c0c0c0] p-2 flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:justify-between shrink-0 text-xs text-slate-600 font-medium">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-4">
                         <span>Total: <span className="font-bold text-black">{pagination.total}</span> entries</span>
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center gap-2">
                             <span>Rows per page:</span>
                             <select
                                 className="bg-white border border-[#c0c0c0] rounded-sm text-[10px] font-bold outline-none"
@@ -286,11 +286,11 @@ export default function Documents() {
                         </div>
                     </div>
 
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center gap-2">
                         <button
                             onClick={() => handlePageChange(pagination.page - 1)}
                             disabled={pagination.page === 1}
-                            className="btn-1c px-2 py-0.5 disabled:opacity-30 disabled:cursor-not-allowed"
+                            className="btn-1c min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 px-2 py-0.5 disabled:opacity-30 disabled:cursor-not-allowed"
                         >
                             <ChevronLeft className="h-3.5 w-3.5" />
                         </button>
@@ -307,20 +307,20 @@ export default function Documents() {
                         <button
                             onClick={() => handlePageChange(pagination.page + 1)}
                             disabled={pagination.page === pagination.pages}
-                            className="btn-1c px-2 py-0.5 disabled:opacity-30 disabled:cursor-not-allowed"
+                            className="btn-1c min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 px-2 py-0.5 disabled:opacity-30 disabled:cursor-not-allowed"
                         >
                             <ChevronRight className="h-3.5 w-3.5" />
                         </button>
                     </div>
 
-                    <div className="text-[10px] uppercase tracking-tighter text-slate-400 font-black">
+                    <div className="hidden sm:block text-[10px] uppercase tracking-tighter text-slate-400 font-black">
                         Registry View: Default
                     </div>
                 </div>
             </div>
 
             {/* Footer Info */}
-            <div className="flex items-center justify-between px-1 text-[10px] text-slate-400 font-bold uppercase tracking-widest shrink-0">
+            <div className="hidden sm:flex items-center justify-between px-1 text-[10px] text-slate-400 font-bold uppercase tracking-widest shrink-0">
                 <div className="flex items-center space-x-4">
                     <div className="flex items-center space-x-1">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>

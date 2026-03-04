@@ -265,11 +265,11 @@ export default function DocumentEditor() {
     return (
         <div className="flex flex-col h-full space-y-4 animate-fade-in bg-[#f2f2f2]">
             {/* 1C Form Toolbar */}
-            <div className="flex items-center space-x-2 bg-[#f2f2f2] p-1.5 border-b border-[#c0c0c0]">
+            <div className="flex flex-wrap items-center gap-2 bg-[#f2f2f2] p-1.5 border-b border-[#c0c0c0]">
                 <button
                     onClick={guard(() => handleSave(true, true))}
                     className={classNames(
-                        "btn-primary-1c h-7 px-4 shadow-none",
+                        "btn-primary-1c h-11 sm:h-7 px-4 shadow-none",
                         isReadOnly && "opacity-50 cursor-not-allowed"
                     )}
                 >
@@ -285,13 +285,13 @@ export default function DocumentEditor() {
                                 showNotification(e.response?.data?.error || 'Failed to create invoice factor','error');
                             }
                         }}
-                        className="btn-1c h-7"
+                        className="btn-1c h-11 sm:h-7"
                     >InvoiceFactor</button>
                 )}
                 {id && document.doc_type === 'InvoiceFactor' && (
                     <button
                         onClick={() => navigate(`/documents/new/SalesInvoice?from=${id}`)}
-                        className="btn-1c h-7"
+                        className="btn-1c h-11 sm:h-7"
                     >Create SalesInvoice</button>
                 )}
                 {id && document.doc_type === 'SalesInvoice' && (
@@ -304,19 +304,19 @@ export default function DocumentEditor() {
                                 showNotification(e.response?.data?.error || 'Failed to create tax invoice','error');
                             }
                         }}
-                        className="btn-1c h-7"
+                        className="btn-1c h-11 sm:h-7"
                     >TaxInvoice</button>
                 )}
                 <button
                     onClick={guard(() => handleSave(false, true))}
-                    className="btn-1c h-7 flex items-center space-x-1"
+                    className="btn-1c h-11 sm:h-7 flex items-center space-x-1"
                 >
                     <CheckCircle className="h-3.5 w-3.5 text-emerald-600" />
                     <span>Post</span>
                 </button>
                 <button
                     onClick={guard(() => handleSave(false, false))}
-                    className="btn-1c h-7 flex items-center space-x-1"
+                    className="btn-1c h-11 sm:h-7 flex items-center space-x-1"
                 >
                     <Save className="h-3.5 w-3.5 text-blue-600" />
                     <span>Write</span>
@@ -324,16 +324,16 @@ export default function DocumentEditor() {
                 <div className="h-4 w-px bg-slate-400 mx-2"></div>
                 <button
                     onClick={guard(handleGenerate)}
-                    className="btn-1c h-7"
+                    className="btn-1c h-11 sm:h-7"
                 >Generate...</button>
                 <button
                     onClick={() => window.print()}
-                    className="btn-1c h-7"
+                    className="btn-1c h-11 sm:h-7"
                 >Print</button>
-                <div className="flex-1"></div>
+                <div className="hidden sm:block flex-1"></div>
                 <button
                     onClick={() => setMoreMenuOpen(!moreMenuOpen)}
-                    className="btn-1c h-7 px-2 relative"
+                    className="btn-1c h-11 sm:h-7 px-2 relative"
                 ><MoreHorizontal className="h-4 w-4" />
                     {moreMenuOpen && (
                         <div className="absolute right-0 top-full mt-1 w-40 bg-white border border-[#c0c0c0] shadow-lg z-20">
@@ -349,8 +349,8 @@ export default function DocumentEditor() {
             <div className="flex-1 bg-white border border-[#c0c0c0] shadow-sm flex flex-col p-4 space-y-6 overflow-auto">
                 {/* Header Information */}
                 <header className="flex flex-col space-y-4">
-                    <div className="flex items-center space-x-6">
-                        <div className="flex items-center space-x-2">
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-6">
+                        <div className="flex items-center gap-2">
                             <span className="text-xs font-medium text-slate-600">Number:</span>
                             <input
                                 type="text"
@@ -359,7 +359,7 @@ export default function DocumentEditor() {
                                 className="input-1c w-24 bg-slate-50 font-mono font-bold"
                             />
                         </div>
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center gap-2">
                             <span className="text-xs font-medium text-slate-600">Date:</span>
                             <div className="relative">
                                 <input
@@ -395,9 +395,9 @@ export default function DocumentEditor() {
                         )}
                     </div>
 
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-3 max-w-4xl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3 max-w-4xl">
                         <div className="flex items-center">
-                            <label className="text-xs text-slate-600 w-32 shrink-0">Counterparty:</label>
+                            <label className="text-xs text-slate-600 w-24 sm:w-32 shrink-0">Counterparty:</label>
                             <div className="flex-1 relative flex">
                                 <input
                                     type="text"
@@ -419,7 +419,7 @@ export default function DocumentEditor() {
                             </div>
                         </div>
                         <div className="flex items-center">
-                            <label className="text-xs text-slate-600 w-32 shrink-0">Warehouse:</label>
+                            <label className="text-xs text-slate-600 w-24 sm:w-32 shrink-0">Warehouse:</label>
                             <div className="flex-1 relative flex">
                                 <input
                                     type="text"
@@ -441,7 +441,7 @@ export default function DocumentEditor() {
                             </div>
                         </div>
                         <div className="flex items-center">
-                            <label className="text-xs text-slate-600 w-32 shrink-0">Document Type:</label>
+                            <label className="text-xs text-slate-600 w-24 sm:w-32 shrink-0">Document Type:</label>
                             <input
                                 type="text"
                                 readOnly
@@ -450,7 +450,7 @@ export default function DocumentEditor() {
                             />
                         </div>
                         <div className="flex items-center">
-                            <label className="text-xs text-slate-600 w-32 shrink-0">Currency:</label>
+                            <label className="text-xs text-slate-600 w-24 sm:w-32 shrink-0">Currency:</label>
                             <div className="flex items-center space-x-2">
                                 <span className="text-xs font-bold">USD</span>
                                 <span className="text-[10px] text-slate-400 font-mono">(1.0000 rate)</span>

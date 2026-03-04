@@ -117,16 +117,16 @@ export default function Reports() {
     return (
         <div className="space-y-4 animate-fade-in flex flex-col h-full w-full overflow-x-hidden">
             <div className="bg-[#f8f8f8] p-3 border border-[#c0c0c0] shadow-sm space-y-3 shrink-0">
-                <div className="flex items-center space-x-6">
-                    <div className="flex items-center space-x-2">
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+                    <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xs font-medium text-slate-600">Period:</span>
-                        <div className="flex items-center space-x-2">
+                        <div className="flex flex-wrap items-center gap-2">
                             <div className="relative">
                                 <input
                                     type="date"
                                     value={period.start}
                                     onChange={(e) => handlePeriodChange('start', e.target.value)}
-                                    className="input-1c h-8 text-xs pr-8"
+                                    className="input-1c h-11 sm:h-8 text-xs pr-8"
                                 />
                                 <Calendar className="absolute right-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
                             </div>
@@ -136,7 +136,7 @@ export default function Reports() {
                                     type="date"
                                     value={period.end}
                                     onChange={(e) => handlePeriodChange('end', e.target.value)}
-                                    className="input-1c h-8 text-xs pr-8"
+                                    className="input-1c h-11 sm:h-8 text-xs pr-8"
                                 />
                                 <Calendar className="absolute right-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
                             </div>
@@ -144,17 +144,17 @@ export default function Reports() {
                     </div>
                 </div>
 
-                <div className="flex items-center space-x-2 border-t border-[#e0e0e0] pt-2">
+                <div className="flex flex-wrap items-center gap-2 border-t border-[#e0e0e0] pt-2">
                     <button
                         onClick={fetchReports}
                         disabled={loading}
-                        className="btn-primary-1c h-7 space-x-1"
+                        className="btn-primary-1c h-11 sm:h-7 space-x-1"
                     >
                         <RefreshCcw className={classNames('h-3.5 w-3.5', loading && 'animate-spin')} />
                         <span>Generate</span>
                     </button>
-                    <button onClick={() => window.print()} className="btn-1c h-7">Print...</button>
-                    <button onClick={handleExport} className="btn-1c h-7">Export</button>
+                    <button onClick={() => window.print()} className="btn-1c h-11 sm:h-7">Print...</button>
+                    <button onClick={handleExport} className="btn-1c h-11 sm:h-7">Export</button>
                 </div>
             </div>
 
