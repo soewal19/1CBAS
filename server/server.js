@@ -26,7 +26,7 @@ const reportsController = require('./controllers/reportsController');
 app.use(cors());
 app.use(express.json());
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // swagger specification
 const swaggerDefinition = {
@@ -396,4 +396,8 @@ app.get('/api/reports/profits', reportsController.profits);
  *             type: object
  */
 
-server.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
+if (require.main === module) {
+    server.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
+}
+
+module.exports = app;

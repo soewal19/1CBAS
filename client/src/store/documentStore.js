@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 import axios from 'axios';
 import { io } from 'socket.io-client';
+import { API_BASE, SOCKET_URL } from '../config/runtime';
 
-const API_BASE = 'http://localhost:3000/api';
-const socket = io('http://localhost:3000');
+const socket = io(SOCKET_URL);
 
 export const useDocumentStore = create((set, get) => ({
     documents: [],

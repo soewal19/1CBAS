@@ -1,14 +1,62 @@
 {
     "version": 2,
-    "buildCommand": "cd client && npm run build",
+    "buildCommand": "cd client && npm ci && npm run build",
     "outputDirectory": "client/dist",
     "rewrites": [
         {
-            "source": "/api/(.*)",
-            "destination": "server/api/vercel-serverless-shim.js"
+            "source": "/documents",
+            "destination": "/index.html"
         },
         {
-            "source": "/(.*)",
+            "source": "/documents/(.*)",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/reports",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/reports/(.*)",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/settings",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/settings/(.*)",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/help",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/help/(.*)",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/notifications",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/notifications/(.*)",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/tasks",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/tasks/(.*)",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/session-manager",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/session-manager/(.*)",
             "destination": "/index.html"
         }
     ]

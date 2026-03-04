@@ -1,12 +1,37 @@
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
+const fs = require('fs');
 const logger = require('./logger');
 
-const dbPath = path.resolve(__dirname, '1cremix.db');
+const resolveDbPath = () => {
+    if (process.env.DB_PATH) {
+        return path.resolve(process.env.DB_PATH);
+    }
+
+    if (process.env.VERCEL) {
+        const vercelDbPath = '/tmp/1cremix.db';
+        const sourceDbPath = path.resolve(__dirname, '1cremix.db');
+
+        try {
+            if (!fs.existsSync(vercelDbPath) && fs.existsSync(sourceDbPath)) {
+                fs.copyFileSync(sourceDbPath, vercelDbPath);
+                logger.info(`Seeded writable Vercel DB at ${vercelDbPath}`);
+            }
+            return vercelDbPath;
+        } catch (err) {
+            logger.warn(`Failed to prepare /tmp DB, fallback to bundled DB: ${err.message}`);
+        }
+    }
+
+    return path.resolve(__dirname, '1cremix.db');
+};
+
+const dbPath = resolveDbPath();
 const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
         logger.error(`Error opening database: ${err.message}`);
     } else {
+        logger.info(`Using SQLite database file: ${dbPath}`);
         logger.info('Connected to the SQLite database.');
         db.run('PRAGMA foreign_keys = ON;', initializeSchema);
     }

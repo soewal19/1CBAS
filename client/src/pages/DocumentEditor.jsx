@@ -17,8 +17,7 @@ import {
     Info
 } from 'lucide-react';
 import { useNotifications } from '../context/NotificationContext';
-
-const API_BASE = 'http://localhost:3000/api';
+import { API_BASE } from '../config/runtime';
 
 // Helper for conditional class names
 const classNames = (...classes) => classes.filter(Boolean).join(' ');

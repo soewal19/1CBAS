@@ -8,8 +8,7 @@ import {
 } from 'lucide-react';
 import { useNotifications } from '../context/NotificationContext';
 import classNames from 'classnames';
-
-const API_BASE = 'http://localhost:3000/api';
+import { API_BASE } from '../config/runtime';
 
 export default function Reports() {
     const [profitReport, setProfitReport] = useState([]);

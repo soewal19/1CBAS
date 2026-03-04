@@ -14,9 +14,8 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { gsap } from 'gsap';
+import { API_BASE } from '../config/runtime';
 
-
-const API_BASE = 'http://localhost:3000/api';
 
 export default function Dashboard() {
     const navigate = useNavigate();
