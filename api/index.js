@@ -10,10 +10,128 @@ const state = {
     nextDocId: 1
 };
 
+const OPENAPI_SPEC = {
+    openapi: '3.0.3',
+    info: {
+        title: '1CBAS API',
+        version: '1.0.0',
+        description: 'Serverless API documentation for 1CBAS'
+    },
+    paths: {
+        '/api/products': {
+            get: {
+                summary: 'Get products',
+                responses: {
+                    200: { description: 'Products list' }
+                }
+            }
+        },
+        '/api/documents': {
+            get: {
+                summary: 'List documents (paginated)',
+                responses: {
+                    200: { description: 'Paginated documents' }
+                }
+            },
+            post: {
+                summary: 'Create document',
+                responses: {
+                    200: { description: 'Created document id' }
+                }
+            }
+        },
+        '/api/documents/{id}': {
+            get: {
+                summary: 'Get document by id',
+                parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'integer' } }],
+                responses: {
+                    200: { description: 'Document' },
+                    404: { description: 'Not found' }
+                }
+            },
+            put: {
+                summary: 'Update document',
+                parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'integer' } }],
+                responses: {
+                    200: { description: 'Updated document' },
+                    404: { description: 'Not found' }
+                }
+            },
+            delete: {
+                summary: 'Delete document',
+                parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'integer' } }],
+                responses: {
+                    200: { description: 'Deleted' }
+                }
+            }
+        },
+        '/api/documents/{id}/post': {
+            post: {
+                summary: 'Post document',
+                parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'integer' } }],
+                responses: {
+                    200: { description: 'Posted' },
+                    404: { description: 'Not found' }
+                }
+            }
+        },
+        '/api/reports/profits': {
+            get: {
+                summary: 'Profit report',
+                responses: {
+                    200: { description: 'Profit rows' }
+                }
+            }
+        },
+        '/api/reports/inventory': {
+            get: {
+                summary: 'Inventory report',
+                responses: {
+                    200: { description: 'Inventory rows' }
+                }
+            }
+        },
+        '/api/reports/sales': {
+            get: {
+                summary: 'Sales report',
+                responses: {
+                    200: { description: 'Sales rows' }
+                }
+            }
+        }
+    }
+};
+
+const swaggerHtml = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>1CBAS API Docs</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script>
+    window.ui = SwaggerUIBundle({
+      url: '/openapi.json',
+      dom_id: '#swagger-ui'
+    });
+  </script>
+</body>
+</html>`;
+
 const json = (res, code, payload) => {
     res.statusCode = code;
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.end(JSON.stringify(payload));
+};
+
+const html = (res, code, payload) => {
+    res.statusCode = code;
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.end(payload);
 };
 
 const setCors = (res) => {
@@ -213,17 +331,12 @@ module.exports = async (req, res) => {
             ]);
         }
 
-        if (req.method === 'GET' && path === '/api-docs') {
-            return json(res, 200, {
-                info: 'Swagger is not enabled in serverless lightweight backend.',
-                routes: [
-                    '/api/products',
-                    '/api/documents',
-                    '/api/reports/profits',
-                    '/api/reports/inventory',
-                    '/api/reports/sales'
-                ]
-            });
+        if (req.method === 'GET' && path === '/openapi.json') {
+            return json(res, 200, OPENAPI_SPEC);
+        }
+
+        if (req.method === 'GET' && (path === '/api-docs' || path === '/api-docs/')) {
+            return html(res, 200, swaggerHtml);
         }
 
         return json(res, 404, { error: 'Not Found' });

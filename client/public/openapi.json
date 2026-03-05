@@ -1,0 +1,140 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "1CBAS API",
+    "version": "1.0.0",
+    "description": "Public API documentation for 1CBAS"
+  },
+  "servers": [
+    {
+      "url": "https://backend-pedros-projects-06014566.vercel.app",
+      "description": "Production backend"
+    }
+  ],
+  "paths": {
+    "/api/products": {
+      "get": {
+        "summary": "Get products",
+        "responses": {
+          "200": {
+            "description": "Products list"
+          }
+        }
+      }
+    },
+    "/api/documents": {
+      "get": {
+        "summary": "Get paginated documents",
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10 } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documents page"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create document",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "doc_type": { "type": "string" },
+                  "document_date": { "type": "string", "format": "date-time" },
+                  "lines": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "product_id": { "type": "integer" },
+                        "quantity": { "type": "number" },
+                        "price": { "type": "number" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created document id"
+          }
+        }
+      }
+    },
+    "/api/documents/{id}": {
+      "get": {
+        "summary": "Get document by id",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Document" },
+          "404": { "description": "Not found" }
+        }
+      },
+      "put": {
+        "summary": "Update document by id",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Updated document" },
+          "404": { "description": "Not found" }
+        }
+      },
+      "delete": {
+        "summary": "Delete document by id",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Deleted" }
+        }
+      }
+    },
+    "/api/documents/{id}/post": {
+      "post": {
+        "summary": "Post document",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Posted" },
+          "404": { "description": "Not found" }
+        }
+      }
+    },
+    "/api/reports/profits": {
+      "get": {
+        "summary": "Get profit report",
+        "responses": {
+          "200": { "description": "Profit rows" }
+        }
+      }
+    },
+    "/api/reports/inventory": {
+      "get": {
+        "summary": "Get inventory report",
+        "responses": {
+          "200": { "description": "Inventory rows" }
+        }
+      }
+    },
+    "/api/reports/sales": {
+      "get": {
+        "summary": "Get sales report",
+        "responses": {
+          "200": { "description": "Sales rows" }
+        }
+      }
+    }
+  }
+}
