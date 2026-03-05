@@ -196,7 +196,7 @@ function MainLayout({ children }) {
             })}
           </nav>
           <div className="p-4 border-t border-[#c0c0c0] bg-white text-[10px] text-slate-400">
-            v8.3.22.1709 (1CBAS Core)
+            v1.0.0.0.1 иуеф (1CBAS Remix Core)
           </div>
         </aside>
 
@@ -247,7 +247,7 @@ function MainLayout({ children }) {
               })}
             </nav>
             <div className="p-4 border-t border-[#c0c0c0] bg-white text-[10px] text-slate-400">
-              v8.3.22.1709 (1CBAS Core)
+              v1.0.0.0.1 иуеф (1CBAS Remix Core)
             </div>
           </aside>
         </div>

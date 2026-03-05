@@ -17,6 +17,8 @@ exports.list = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const result = await documentsService.updateDocument(req.params.id, req.body);
+        const io = req.app.get('io');
+        if (io) io.emit('document_updated', { id: Number(req.params.id) });
         res.json(result);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -26,6 +28,8 @@ exports.update = async (req, res) => {
 exports.delete = async (req, res) => {
     try {
         const result = await documentsService.deleteDocument(req.params.id);
+        const io = req.app.get('io');
+        if (io) io.emit('document_deleted', { id: Number(req.params.id) });
         res.json(result);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -45,6 +49,8 @@ exports.getById = async (req, res) => {
 exports.create = async (req, res) => {
     try {
         const result = await documentsService.createDocument(req.body);
+        const io = req.app.get('io');
+        if (io) io.emit('document_added', { id: result.id, doc_type: req.body.doc_type || 'Order' });
         res.json(result);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -54,6 +60,8 @@ exports.create = async (req, res) => {
 exports.post = async (req, res) => {
     try {
         const result = await documentsService.postDocument(req.params.id);
+        const io = req.app.get('io');
+        if (io) io.emit('document_posted', { id: Number(req.params.id) });
         res.json(result);
     } catch (err) {
         if (err.status) {
