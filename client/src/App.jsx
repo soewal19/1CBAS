@@ -177,7 +177,7 @@ function MainLayout({ children }) {
 
       <div className="flex flex-1 overflow-hidden w-full">
         {/* Sidebar */}
-        <aside className="sidebar-1c hidden lg:flex shrink-0">
+        <aside className="sidebar-1c hidden lg:flex lg:flex-col shrink-0">
           <div className="p-3 bg-[#e0e0e0] font-bold text-[10px] uppercase tracking-wider text-slate-600">Quick Access</div>
           <nav className="flex-1 py-1 overflow-y-auto">
             {navItems.map((item) => {
