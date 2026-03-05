@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   FileText,
@@ -18,19 +18,16 @@ import {
 import classNames from 'classnames';
 
 import { NotificationProvider, useNotifications } from './context/NotificationContext';
-import Loader from './components/Loader';
 import Preloader from './components/Preloader';
-
-// Lazy load pages
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const Documents = lazy(() => import('./pages/Documents'));
-const DocumentEditor = lazy(() => import('./pages/DocumentEditor'));
-const Reports = lazy(() => import('./pages/Reports'));
-const Help = lazy(() => import('./pages/Help'));
-const Tasks = lazy(() => import('./pages/Tasks'));
-const SessionManager = lazy(() => import('./pages/SessionManager'));
-const SettingsPage = lazy(() => import('./pages/Settings'));
-const NotificationsPage = lazy(() => import('./pages/Notifications'));
+import Dashboard from './pages/Dashboard';
+import Documents from './pages/Documents';
+import DocumentEditor from './pages/DocumentEditor';
+import Reports from './pages/Reports';
+import Help from './pages/Help';
+import Tasks from './pages/Tasks';
+import SessionManager from './pages/SessionManager';
+import SettingsPage from './pages/Settings';
+import NotificationsPage from './pages/Notifications';
 
 function MainLayout({ children }) {
   const location = useLocation();
@@ -204,9 +201,7 @@ function MainLayout({ children }) {
         <main className="flex-1 min-w-0 overflow-hidden bg-white lg:border-l border-[#c0c0c0] flex flex-col">
           <Breadcrumbs />
           <div className="flex-1 p-4 overflow-auto animate-fade-in w-full">
-            <Suspense fallback={<Loader />}>
-              {children}
-            </Suspense>
+            {children}
           </div>
         </main>
       </div>
