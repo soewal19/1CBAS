@@ -41,7 +41,8 @@ export default function Documents() {
         endDate,
         setStartDate,
         setEndDate,
-        deleteDocument
+        deleteDocument,
+        socketConnected
     } = useDocumentStore();
     const { showNotification } = useNotifications();
 
@@ -323,8 +324,8 @@ export default function Documents() {
             <div className="hidden sm:flex items-center justify-between px-1 text-[10px] text-slate-400 font-bold uppercase tracking-widest shrink-0">
                 <div className="flex items-center space-x-4">
                     <div className="flex items-center space-x-1">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                        <span>Socket Connected</span>
+                        <div className={classNames("w-1.5 h-1.5 rounded-full", socketConnected ? "bg-emerald-500" : "bg-rose-500")}></div>
+                        <span>{socketConnected ? "Socket Connected" : "Socket Disconnected"}</span>
                     </div>
                     <span>Database: 1CBAS_PROD</span>
                 </div>

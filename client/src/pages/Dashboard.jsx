@@ -16,16 +16,22 @@ import classNames from 'classnames';
 import { gsap } from 'gsap';
 import { API_BASE } from '../config/runtime';
 import { buildDefaultDocuments, DEFAULT_INVENTORY_REPORT } from '../config/defaultData';
+import { useDocumentStore } from '../store/documentStore';
 
 
 export default function Dashboard() {
     const navigate = useNavigate();
+    const { socketConnected, initSockets } = useDocumentStore();
     const [stats, setStats] = useState({
         totalSales: 0,
         stockValue: 0,
         pendingOrders: 0,
         lowStockItems: 0
     });
+
+    useEffect(() => {
+        initSockets();
+    }, [initSockets]);
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -177,11 +183,11 @@ export default function Dashboard() {
                         <p className="text-[10px] text-slate-400 uppercase font-black tracking-widest mb-3">System Health</p>
                         <div className="flex items-center justify-between mb-2">
                             <span className="text-xs font-bold text-slate-600">Database Connection</span>
-                            <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></div>
+                            <div className={classNames("w-2 h-2 rounded-full shadow-sm", socketConnected ? "bg-emerald-500 shadow-emerald-500/50" : "bg-rose-500 shadow-rose-500/50")}></div>
                         </div>
                         <div className="flex items-center justify-between">
                             <span className="text-xs font-bold text-slate-600">Socket Node Status</span>
-                            <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50 animate-pulse"></div>
+                            <div className={classNames("w-2 h-2 rounded-full shadow-sm", socketConnected ? "bg-emerald-500 shadow-emerald-500/50 animate-pulse" : "bg-rose-500 shadow-rose-500/50")}></div>
                         </div>
                     </div>
                 </div>

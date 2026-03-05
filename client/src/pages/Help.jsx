@@ -128,7 +128,7 @@ export default function Help() {
 
             <footer className="pt-10 text-center">
                 <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em]">
-                    1CBAS Enterprise Edition &copy; 2026. All System Rights Reserved.
+                    1C REMIX BAS Enterprise Edition
                 </p>
             </footer>
         </div>

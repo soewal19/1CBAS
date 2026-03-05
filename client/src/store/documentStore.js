@@ -20,9 +20,26 @@ export const useDocumentStore = create((set, get) => ({
     filterTerm: '',
     startDate: '',
     endDate: '',
+    socketConnected: socket.connected,
+    socketsInitialized: false,
 
     // WebSocket Initialization
     initSockets: () => {
+        if (get().socketsInitialized) return;
+        set({ socketsInitialized: true, socketConnected: socket.connected });
+
+        socket.on('connect', () => {
+            set({ socketConnected: true });
+        });
+
+        socket.on('disconnect', () => {
+            set({ socketConnected: false });
+        });
+
+        socket.on('connect_error', () => {
+            set({ socketConnected: false });
+        });
+
         socket.on('document_added', (newDoc) => {
             // Re-fetch current page if a new doc is added to see the change
             get().fetchDocuments(get().pagination.page);
