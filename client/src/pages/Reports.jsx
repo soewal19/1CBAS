@@ -9,6 +9,7 @@ import {
 import { useNotifications } from '../context/NotificationContext';
 import classNames from 'classnames';
 import { API_BASE } from '../config/runtime';
+import { DEFAULT_INVENTORY_REPORT, DEFAULT_PROFIT_REPORT } from '../config/defaultData';
 
 export default function Reports() {
     const [profitReport, setProfitReport] = useState([]);
@@ -29,7 +30,9 @@ export default function Reports() {
             showNotification('Report generated successfully', 'success');
         } catch (err) {
             console.error('Report Fetch Error:', err);
-            showNotification('Failed to generate report', 'error');
+            setProfitReport(DEFAULT_PROFIT_REPORT);
+            setInventoryReport(DEFAULT_INVENTORY_REPORT);
+            showNotification('Backend unavailable, showing default report data', 'warning');
         } finally {
             setLoading(false);
         }

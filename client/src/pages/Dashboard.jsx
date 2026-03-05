@@ -15,6 +15,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { gsap } from 'gsap';
 import { API_BASE } from '../config/runtime';
+import { buildDefaultDocuments, DEFAULT_INVENTORY_REPORT } from '../config/defaultData';
 
 
 export default function Dashboard() {
@@ -45,6 +46,16 @@ export default function Dashboard() {
                 setStats({ totalSales, stockValue, pendingOrders, lowStockItems });
             } catch (err) {
                 console.error("Error fetching stats:", err);
+                const fallbackSales = buildDefaultDocuments(20).reduce((sum, row) => sum + (row.total_amount || 0), 0);
+                const fallbackStock = DEFAULT_INVENTORY_REPORT.reduce((sum, item) => sum + (item.total_value || 0), 0);
+                const fallbackPending = buildDefaultDocuments(20).filter((d) => d.status === 'draft' && d.doc_type === 'Order').length;
+                const fallbackLowStock = DEFAULT_INVENTORY_REPORT.filter((item) => item.total_stock < 10).length;
+                setStats({
+                    totalSales: fallbackSales,
+                    stockValue: fallbackStock,
+                    pendingOrders: fallbackPending,
+                    lowStockItems: fallbackLowStock
+                });
             }
         };
         fetchStats();

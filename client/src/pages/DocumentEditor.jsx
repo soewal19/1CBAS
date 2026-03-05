@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useNotifications } from '../context/NotificationContext';
 import { API_BASE } from '../config/runtime';
+import { DEFAULT_PRODUCTS } from '../config/defaultData';
 
 // Helper for conditional class names
 const classNames = (...classes) => classes.filter(Boolean).join(' ');
@@ -64,12 +65,15 @@ export default function DocumentEditor() {
     };
 
     useEffect(() => {
-        axios.get(`${API_BASE}/products`).then(res => setProducts(res.data));
+        axios.get(`${API_BASE}/products`)
+            .then(res => setProducts(res.data))
+            .catch(() => setProducts(DEFAULT_PRODUCTS));
 
         if (id) {
             setLoading(true);
             axios.get(`${API_BASE}/documents/${id}`)
                 .then(res => setDocument(res.data))
+                .catch(() => showNotification('Failed to load document from backend', 'warning'))
                 .finally(() => setLoading(false));
         } else if (fromId) {
             setLoading(true);
@@ -84,9 +88,10 @@ export default function DocumentEditor() {
                         }))
                     });
                 })
+                .catch(() => showNotification('Failed to clone source document from backend', 'warning'))
                 .finally(() => setLoading(false));
         }
-    }, [id, type, fromId]);
+    }, [id, type, fromId, showNotification]);
 
     const addLine = async () => {
         try {

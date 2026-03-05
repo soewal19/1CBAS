@@ -4,10 +4,38 @@ const DEFAULT_PRODUCTS = [
     { id: 3, name: 'Mainframe Unit', type: 'goods', price: 7800 }
 ];
 
+const DEFAULT_DOC_TYPES = ['Order', 'PurchaseInvoice', 'SalesInvoice', 'InvoiceFactor', 'TaxInvoice'];
+
+const makeDefaultDocuments = (count = 20) => {
+    const docs = [];
+    for (let i = 1; i <= count; i += 1) {
+        const type = DEFAULT_DOC_TYPES[i % DEFAULT_DOC_TYPES.length];
+        const product = DEFAULT_PRODUCTS[i % DEFAULT_PRODUCTS.length];
+        const qty = (i % 5) + 1;
+        const price = product.price;
+        const date = new Date(Date.now() - i * 24 * 60 * 60 * 1000).toISOString();
+        docs.push({
+            id: i,
+            doc_type: type,
+            document_date: date,
+            status: i % 3 === 0 ? 'posted' : 'draft',
+            lines: [
+                {
+                    product_id: product.id,
+                    quantity: qty,
+                    price
+                }
+            ],
+            total_amount: qty * price
+        });
+    }
+    return docs;
+};
+
 const state = {
     products: [...DEFAULT_PRODUCTS],
-    documents: [],
-    nextDocId: 1
+    documents: makeDefaultDocuments(20),
+    nextDocId: 21
 };
 
 const OPENAPI_SPEC = {

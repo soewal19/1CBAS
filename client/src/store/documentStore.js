@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 import { API_BASE, SOCKET_URL } from '../config/runtime';
+import { buildDefaultDocuments } from '../config/defaultData';
 
 const socket = io(SOCKET_URL);
 
@@ -81,7 +82,21 @@ export const useDocumentStore = create((set, get) => ({
                 isLoading: false
             });
         } catch (err) {
-            set({ error: err.message, isLoading: false });
+            const fallback = buildDefaultDocuments(20);
+            const start = (page - 1) * limit;
+            const end = start + limit;
+            const paged = fallback.slice(start, end);
+            set({
+                error: err.message,
+                documents: paged,
+                pagination: {
+                    total: fallback.length,
+                    page,
+                    limit,
+                    pages: Math.max(1, Math.ceil(fallback.length / limit))
+                },
+                isLoading: false
+            });
         }
     },
 

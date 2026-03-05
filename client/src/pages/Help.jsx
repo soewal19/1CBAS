@@ -66,10 +66,13 @@ export default function Help() {
                         <p className="text-xs text-slate-500 font-medium tracking-tight">Enterprise Standard Operating Procedures</p>
                     </div>
                 </div>
-                <button className="btn-1c space-x-2">
+                <a
+                    className="btn-1c space-x-2 inline-flex items-center"
+                    href="mailto:support@1cbas.app?subject=1CBAS%20Support%20Request"
+                >
                     <MessageSquare className="h-3.5 w-3.5 text-blue-500" />
                     <span>Contact Support</span>
-                </button>
+                </a>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
